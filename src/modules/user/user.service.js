@@ -47,10 +47,6 @@ export const login =async(req ,res, next)=>{
 
 export const deleteMyAccount = async(req , res , next)=>{
     try{
-        let user = await userModel.findById(req.user.id)
-        if(!user){
-            return next(new AppError("User Not Found",404))
-        }
         let deletedUser= await userModel.findByIdAndDelete(req.user.id)
         if(deletedUser){
             res.status(200).json({message:"Account Deleted Successfully"})

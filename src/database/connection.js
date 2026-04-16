@@ -1,7 +1,4 @@
 import mongoose from "mongoose";
-import {config} from "dotenv"
-
-config()
 
 export const databaseConnection=()=>{
     mongoose.connect(process.env.Database_Url).then(()=>{

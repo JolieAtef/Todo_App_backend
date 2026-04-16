@@ -35,4 +35,4 @@ const taskSchema = mongoose.Schema({
     }
 })
 
-export const taskModel = mongoose.model("tasks", taskModel )
+export const taskModel = mongoose.model("tasks", taskSchema )

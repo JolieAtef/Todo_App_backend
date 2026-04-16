@@ -4,11 +4,6 @@ import { AppError } from "../../utils/AppError.js"
 
 export const getMyCategories = async(req , res , next)=>{
     try{
-        let user = await userModel.findById(req.user.id)
-        if(!user){
-            return next(new AppError("User Not Found",404))
-        }
-
         let categories = await categoryModel.find({user:req.user.id})
         if(categories.length==0){
             return next(new AppError("No Categories Found",404))
@@ -22,12 +17,7 @@ export const getMyCategories = async(req , res , next)=>{
 
 export const addCategory = async( req , res , next)=>{
     try{
-        let {title , color} = req.body
-          let user = await userModel.findById(req.user.id)
-          if(!user){
-              return next(new AppError("User Not Found",404))
-          }
-         
+        let {title , color} = req.body 
           let addedCategory = await categoryModel.create({user:req.user.id , title , color})
           if(addCategory){
             res.status(200).json({message:"Category Added Successfully", addedCategory})
