@@ -38,9 +38,9 @@ export const updateCategory = async(req , res)=>{
             return next(new AppError("Category Not Found", 404)) 
         }
 
-        let updateCategory = await categoryModel.findByIdAndUpdate(req.user.id , {title , color}, {new :true})
-        if(updateCategory){
-            res.status(200).json({message:"Category Updated Successfully", updateCategory})
+        let updatedCategory = await categoryModel.findByIdAndUpdate(id , {title , color}, {new :true})
+        if(updatedCategory){
+            res.status(200).json({message:"Category Updated Successfully", updatedCategory})
         }
 
     }catch(err){
@@ -57,7 +57,7 @@ export const deleteCategory = async (req ,res , next)=>{
         if(!category){
             return next(new AppError("Category Not Found", 404)) 
         }
-        let deletedCategory = await categoryModel.findByIdAndDelete(req.user.id)
+        let deletedCategory = await categoryModel.findByIdAndDelete(id)
         if(deletedCategory){
             res.status(200).json({message:"Category deleted Successfully"})
         }
