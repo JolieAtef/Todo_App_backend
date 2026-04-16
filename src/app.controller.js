@@ -22,9 +22,9 @@ export const bootstrap=()=>{
     app.use(globalError)
 
     app.use(cors({
-        origin:"*"
+        origin:["http://localhost:5173" , "*"]
     }))
-    
+
     app.listen(3000, ()=>{
         console.log("server running on port 3000")
     })
