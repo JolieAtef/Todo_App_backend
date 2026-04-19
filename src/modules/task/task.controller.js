@@ -15,15 +15,15 @@ router.get("/", authenticate , getTasks)
 
 router.post("/", authenticate , validation(addTaskSchema), addTask)
 
-router.put("/", authenticate , validation(updateTaskSchema),updateTask)
+router.put("/:id", authenticate , validation(updateTaskSchema),updateTask)
 
-router.delete("/", authenticate , deleteTask)
+router.delete("/:id", authenticate , deleteTask)
 
-router.put("/complete", authenticate , completeTask)
+router.put("/complete/:id", authenticate , completeTask)
 
-router.put("/incomplete", authenticate , inCompleteTask)
+router.put("/incomplete/:id", authenticate , inCompleteTask)
 
-router.put("/move", authenticate, validation(moveTaskSchema) , moveTask)
+router.put("/move/:id", authenticate, validation(moveTaskSchema) , moveTask)
 
 
 

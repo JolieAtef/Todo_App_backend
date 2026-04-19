@@ -1,3 +1,4 @@
+import { categoryModel } from "../../database/models/category.model.js"
 import { taskModel } from "../../database/models/task.model.js"
 import { AppError } from "../../utils/AppError.js"
 
@@ -6,11 +7,11 @@ import { AppError } from "../../utils/AppError.js"
 export const getCategoryTasks = async(req ,res , next)=>{
     try{
         let {id} = req.params
-        let tasks = await taskModel.find({user:req.user.id , category:id})
-        if(tasks.length==0){
-           return next(new AppError("No Tasks Found", 404))
+        let category = await categoryModel.findOne({user:req.user.id ,_id:id}).populate("categoryTasks")
+        if(!category){
+           return next(new AppError("Category Not Found", 404))
         }
-        res.status(200).json({message:"Tasks of Category", tasks})
+        res.status(200).json({message:"Tasks of Category", category})
 
     }catch(err){
         next(err)
@@ -55,7 +56,7 @@ export const getTasks = async(req ,res , next)=>{
 export const addTask = async(req , res , next)=>{
     try{
     let {category , title , description , priority , dueDate} = req.body
-    let existedCategory = await categoryModel.findById(id)
+    let existedCategory = await categoryModel.findById(category)
     if(!existedCategory){
        return next(new AppError("Category Not Found", 404)) 
      }
@@ -154,7 +155,7 @@ export const moveTask = async(req , res , next)=>{
             return next(new AppError("Task Not Found", 404))
         }
 
-       let existedCategory = await categoryModel.findById(id)
+       let existedCategory = await categoryModel.findById(category)
        if(!existedCategory){
          return next(new AppError("Category Not Found", 404)) 
        }

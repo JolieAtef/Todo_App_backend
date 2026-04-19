@@ -14,6 +14,16 @@ const categorySchema = mongoose.Schema({
         type:String,
         default:"#ffffff"
     }
+},{
+    toJSON:{ virtuals: true }
 })
+
+
+categorySchema.virtual('categoryTasks', {
+    ref: 'tasks',
+    localField: '_id',
+    foreignField: 'category'
+});
+  
 
 export const categoryModel= mongoose.model("categories" , categorySchema)
