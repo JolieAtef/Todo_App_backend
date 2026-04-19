@@ -4,7 +4,7 @@ import { AppError } from "../../utils/AppError.js"
 
 export const getMyCategories = async(req , res , next)=>{
     try{
-        let categories = await categoryModel.find({user:req.user.id})
+        let categories = await categoryModel.find({user:req.user.id}).populate("categoryTasks")
         if(categories.length==0){
             return next(new AppError("No Categories Found",404))
         }else{
