@@ -117,8 +117,7 @@ export const completeTask = async(req , res , next)=>{
         }else{
             let completedTask = await taskModel.findByIdAndUpdate(id , {isCompleted:true}, {new:true})
             if(completedTask){
-            let category = await categoryModel.findOne({user:req.user.id ,_id:task.category}).populate("categoryTasks")
-                res.status(200).json({message:"Task completed Successfully" , category})
+                res.status(200).json({message:"Task completed Successfully" , completedTask})
             }
         }
         
@@ -139,8 +138,7 @@ export const inCompleteTask = async(req , res , next)=>{
         }else{
             let inCompletedTask = await taskModel.findByIdAndUpdate(id , {isCompleted:false}, {new:true})
             if(inCompletedTask){
-                let category = await categoryModel.findOne({user:req.user.id , _id:task.category}).populate("categoryTasks")
-                res.status(200).json({message:"Task inCompleted" , category})
+                res.status(200).json({message:"Task inCompleted" , inCompletedTask})
             }
         }       
     }catch(err){
