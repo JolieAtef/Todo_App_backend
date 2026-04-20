@@ -20,7 +20,7 @@ export const addCategory = async( req , res , next)=>{
         let {title , color} = req.body 
           let addedCategory = await categoryModel.create({user:req.user.id , title , color})
           if(addCategory){
-            res.status(200).json({message:"Category Added Successfully", addedCategory})
+            res.status(200).json({message:"Collection Added Successfully", addedCategory})
           }
 
     }catch(err){
@@ -35,12 +35,12 @@ export const updateCategory = async(req , res)=>{
         let{title , color} = req.body
         let category = await categoryModel.findById(id)
         if(!category){
-            return next(new AppError("Category Not Found", 404)) 
+            return next(new AppError("Collection Not Found", 404)) 
         }
 
         let updatedCategory = await categoryModel.findByIdAndUpdate(id , {title , color}, {new :true})
         if(updatedCategory){
-            res.status(200).json({message:"Category Updated Successfully", updatedCategory})
+            res.status(200).json({message:"Collection Updated Successfully", updatedCategory})
         }
 
     }catch(err){
@@ -59,7 +59,7 @@ export const deleteCategory = async (req ,res , next)=>{
         }
         let deletedCategory = await categoryModel.findByIdAndDelete(id)
         if(deletedCategory){
-            res.status(200).json({message:"Category deleted Successfully"})
+            res.status(200).json({message:"Collection deleted Successfully"})
         }
        
     }catch(err){
