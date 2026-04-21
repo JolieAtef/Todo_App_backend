@@ -45,6 +45,18 @@ export const login =async(req ,res, next)=>{
     }
 }
 
+export const getMyProfile = async(req , res ,next)=>{
+    try{
+        let user = await userModel.findById(req.user.id).select("-password")
+        if(!user){
+          return next(new AppError("User Not Found", 404))
+        }
+        res.status(200).json({message:"User Data" , user})
+    }catch(err){
+        next(err)
+    }
+}
+
 export const deleteMyAccount = async(req , res , next)=>{
     try{
         let deletedUser= await userModel.findByIdAndDelete(req.user.id)
