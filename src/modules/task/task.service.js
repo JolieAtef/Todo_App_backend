@@ -34,13 +34,16 @@ export const getSpecificTask = async(req ,res , next)=>{
 
 export const getTasks = async(req ,res , next)=>{
     try{
-        let {isCompleted , priority} = req.query
+        let {isCompleted , priority , category} = req.query
         let query ={}
         if(isCompleted){
             query.isCompleted=isCompleted
         }
         if(priority){
             query.priority=priority
+        }
+        if(category){
+            query.category=category
         }
         let tasks = await taskModel.find({user:req.user.id , ...query})
         if(tasks.length==0){
