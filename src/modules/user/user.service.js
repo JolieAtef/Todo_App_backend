@@ -1,4 +1,6 @@
 import { generateToken } from "../../common/middleware/auth.js"
+import { categoryModel } from "../../database/models/category.model.js"
+import { taskModel } from "../../database/models/task.model.js"
 import { userModel } from "../../database/models/user.model.js"
 import { AppError } from "../../utils/AppError.js"
 import bcrypt from "bcrypt"
@@ -61,6 +63,8 @@ export const deleteMyAccount = async(req , res , next)=>{
     try{
         let deletedUser= await userModel.findByIdAndDelete(req.user.id)
         if(deletedUser){
+            await categoryModel.deleteMany({user:req.user.id})
+            await taskModel.deleteMany({user:req.user.id})
             res.status(200).json({message:"Account Deleted Successfully"})
         }
     }catch(err){

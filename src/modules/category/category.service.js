@@ -1,4 +1,5 @@
 import { categoryModel } from "../../database/models/category.model.js"
+import { taskModel } from "../../database/models/task.model.js"
 import { AppError } from "../../utils/AppError.js"
 
 
@@ -59,6 +60,7 @@ export const deleteCategory = async (req ,res , next)=>{
         }
         let deletedCategory = await categoryModel.findByIdAndDelete(id)
         if(deletedCategory){
+            await taskModel.deleteMany({category:id})
             res.status(200).json({message:"Collection deleted Successfully"})
         }
        
